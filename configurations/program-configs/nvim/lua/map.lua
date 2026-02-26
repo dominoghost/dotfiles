@@ -6,6 +6,8 @@ vim.keymap.set("n", "<leader>y", '"+y')
 -- Undotree binds
 vim.keymap.set("n", "<leader>u", ":UndotreeShow<CR>:UndotreeFocus<CR>", { desc = "Toggle undo tree" })
 
+vim.keymap.set("n", "<leader>e", ":NvimTreeOpen<CR>", { desc = "Open nvim-tree" })
+
 -- Telescope binds
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })

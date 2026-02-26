@@ -19,15 +19,5 @@ return {
 				args = { "/home/retro/Downloads/js-debug/src/dapDebugServer.js", "${port}" },
 			},
 		}
-
-		dap.configurations.javascript = {
-			{
-				type = "pwa-node",
-				request = "launch",
-				name = "Launch file",
-				program = "index.js",
-				cwd = "${workspaceFolder}",
-			},
-		}
 	end,
 }
