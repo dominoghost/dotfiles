@@ -3,9 +3,6 @@ return {
 	event = { "BufWritePre" },
 	cmd = { "ConformInfo" },
 	opts = {
-		default_format_opts = {
-			lsp_format = "fallback",
-		},
 		-- FIXME: Add/Remove formatters by what's needed
 		formatters_by_ft = {
 			python = {
@@ -22,6 +19,7 @@ return {
 			luau = {
 				"stylua",
 			},
+			http = { lsp_format = "prefer" },
 		},
 		format_on_save = {
 			-- These options will be passed to conform.format()
