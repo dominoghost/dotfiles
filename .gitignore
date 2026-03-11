@@ -1,2 +1,3 @@
 .vscode
 archlinux-install_pacstrap.log
+copy_dotfiles.sh
