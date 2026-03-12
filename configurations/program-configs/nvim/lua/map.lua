@@ -1,7 +1,7 @@
 vim.g.mapleader = " "
 
 -- Copy to clipboard
-vim.keymap.set("n", "<leader>y", '"+y')
+vim.keymap.set({ "n", "v" }, "<leader>y", '"+y')
 
 -- Undotree binds
 vim.keymap.set("n", "<leader>u", ":UndotreeShow<CR>:UndotreeFocus<CR>", { desc = "Toggle undo tree" })
