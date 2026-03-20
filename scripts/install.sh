@@ -51,12 +51,12 @@ readonly NO="n"
 
 # Partioning Variables
 efi_partition_number=1
-efi_drive=nvme0n1
+efi_drive=sda
 efi_full_drive=
 efi_size=500M
-efi_windows=nvme0n1
+efi_windows=
 
-root_partition_number=1
+root_partition_number=3
 root_drive=sda
 root_full_drive=
 
@@ -66,13 +66,13 @@ swap_full_drive=
 swap_size=1G
 
 declare -a extra_full_drives
-extra_drives=("nvme0n2")
-extra_names=("yatta")
+extra_drives=()
+extra_names=()
 
 # Other Variables
-encrypt=$YES
-cpu=$AMD
-gpu=$NVIDIA
+encrypt=$NO
+cpu=$VIRTUAL_BOX
+gpu=$VIRTUAL_BOX
 
 pc_hostname=robot
 pc_user=main
@@ -265,7 +265,7 @@ setup_firewall() {
     INTERFACE=$(find /sys/class/net/en* | awk`` -F/ '{print $NF}') # TODO: May not work with laptop that uses Wifi
     arch-chroot /mnt ufw default deny incoming
     arch-chroot /mnt ufw default allow outgoing
-    arch-chroot /mnt ufw allow in on "$INTERFACE" from 192.168.0.0/24 # TODO: Lapto has a better configuration
+    arch-chroot /mnt ufw allow in on "$INTERFACE" from 192.168.0.0/24 # TODO: Laptop has a better configuration
     arch-chroot /mnt ufw enable
 }
 
@@ -306,7 +306,7 @@ encrypt_partition_drives() {
         local drive_name=${extra_names[i]}
         local drive_full_device=${extra_full_drives[i]}
         sgdisk -I -n $drive_partition_number:0:0 -c $drive_partition_number:"$drive_name" -t $drive_partition_number:8300 /dev/"$drive_device"
-        
+
         mkdir -p /mnt/etc/cryptsetup-keys.d
         dd bs=512 count=4 if=/dev/random iflag=fullblock | install -m 0600 /dev/stdin /mnt/etc/cryptsetup-keys.d/"$drive_name".key
 
@@ -372,7 +372,7 @@ partitioning() {
     else
         partition_drives
     fi
-    
+
     print_drives
     lsblk -f
 }
@@ -387,7 +387,7 @@ efi_setup() {
     if [[ $encrypt == "y" ]]; then
         sed -i "s/HOOKS=(base udev autodetect microcode/HOOKS=(systemd autodetect microcode modconf kms keyboard sd-vconsole block sd-encrypt filesystems fsck) #/" /mnt/etc/mkinitcpio.conf # TODO: Delete kms for nvidia
         cat ./boot/encrypted_root.conf > /mnt/etc/cmdline.d/root.conf
-        
+
         echo "swap LABEL=swap_luks /dev/urandom swap,offset=2048,cipher=aes-xts-plain64,size=512" >> /mnt/etc/crypttab
         echo "/dev/mapper/swap  none    swap defaults 0 0" >> /mnt/etc/fstab
 
@@ -420,7 +420,7 @@ system_install() {
 
     echo Packages: "${packages[@]}" >> debug.txt
     arch-chroot /mnt pacman -S "${packages[@]}"
-    
+
     echo Optional Packages: "${optional_packages[@]}" >> debug.txt
     arch-chroot /mnt pacman -S --asdeps "${optional_packages[@]}"
 
