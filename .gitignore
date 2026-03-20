@@ -4,3 +4,4 @@ copy_dotfiles.sh
 
 *.png
 *.qsb
+.qmlls.ini
