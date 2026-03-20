@@ -16,6 +16,11 @@ vim.lsp.config("luau_lsp", {
 		:totable(),
 })
 
+vim.lsp.config("qmlls", {
+	cmd = { "qmlls6" },
+	filetypes = { "qml" },
+})
+
 vim.lsp.config("pyright", {
 	settings = {
 		pyright = {
@@ -89,3 +94,5 @@ vim.lsp.enable("jsonls")
 vim.lsp.enable("bashls")
 vim.lsp.enable("ruff") -- Python linter and formatter
 vim.lsp.enable("pyright") -- Python completion and intellisense
+vim.lsp.enable("qmlls")
+vim.lsp.enable("glsl_analyzer")
