@@ -8,7 +8,6 @@ layout(std140, binding = 0) uniform buf {
     float qt_Opacity;
     float fizzleAmount;
     float time;
-    float grainScale;
 };
 
 layout(binding = 1) uniform sampler2D source;
@@ -19,27 +18,25 @@ float random(vec2 uv) {
 
 // 1. Create a jittering horizontal offset
 void main() {
-	float t = time / 1000;
 	highp vec2 uv = qt_TexCoord0;
     // This creates the "torn" look seen in the anime's transitions
-    highp float jitter = (random(vec2(floor(uv.y * 100.0), t)) - 0.5) * fizzleAmount;
+    highp float jitter = (random(vec2(floor(uv.y * 100.0), time)) - 0.5) * fizzleAmount;
 
     // 2. Sample the texture with the jitter
     highp vec4 tex = texture(source, uv + vec2(jitter, 0.0));
 
     // 3. Add the "Lain" Static (from our previous step)
-    highp float n = random(uv + floor(t * 12.0));
+    highp float n = random(uv + floor(time * 12.0));
 
     // 4. Create the CRT Scanlines
     // This creates a dark line every few pixels vertically
-    highp float scanline = sin(uv.y * 800.0) * 0.1;
+    highp float scanline = sin(uv.y * 100.0 + time * 5.5) * 0.05;
 
     // Combine everything
     highp vec3 finalColor = tex.rgb + (n * 0.15); // Add a little static
     finalColor -= scanline; // Subtract the scanline darkness
 
     // Make the colors slightly "blown out" like a bright CRT
-    finalColor *= 1.1;
     fragColor = vec4(finalColor, tex.a) * qt_Opacity;
 }
 

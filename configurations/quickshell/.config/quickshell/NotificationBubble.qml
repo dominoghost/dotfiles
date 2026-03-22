@@ -5,11 +5,10 @@ import Quickshell.Wayland
 import Quickshell.Widgets
 
 PanelWindow {
-    // Since the panel's screen is unset, it will be picked by the compositor
-    // when the window is created. Most compositors pick the current active monitor.
-
-    anchors.bottom: true
-    margins.bottom: screen.height / 5
+    anchors.top: true
+    anchors.left: true
+    margins.top: 15
+    margins.left: 15
     exclusiveZone: 0
     implicitWidth: 400
     implicitHeight: 400
@@ -22,15 +21,6 @@ PanelWindow {
         onNotification: (notif) => {
             notif.tracked = true;
             console.log(trackedNotifications.values.length);
-            for (var prop in notif) {
-                // We wrap it in a try-catch because some native properties
-                // might throw errors when accessed directly
-                try {
-                    console.log(prop + " : " + notif[prop]);
-                } catch (e) {
-                    console.log(prop + " : [unreadable]");
-                }
-            }
         }
     }
 
@@ -41,15 +31,6 @@ PanelWindow {
             model: notifServer.trackedNotifications
 
             Item {
-                // 2. The Proxy (Prevents the "Disappearing Text" loop)
-                // ShaderEffectSource {
-                //     // This is why 'visible: false' works above
-                //     id: effectSource
-                //     sourceItem: sourceBox
-                //     //live: true // Keep true if the text/source changes
-                //     hideSource: true
-                // }
-
                 id: notifItem
 
                 required property Notification modelData
@@ -58,36 +39,61 @@ PanelWindow {
                 width: 400
                 height: 90
 
-                // 1. The Source Item
-                Rectangle {
-                    id: sourceBox
+                WrapperRectangle {
+                    id: wrapRect
 
-                    width: parent.width
-                    height: parent.height
-                    color: "black"
-                    visible: false // We hide this; the shader draws the version we see
+                    anchors.fill: parent
+                    border.color: "white"
+                    border.width: 1
+                    color: "transparent"
                     layer.enabled: true // This helps the ShaderEffectSource capture it
 
-                    IconImage {
-                        source: notifItem.modelData.image
-                        implicitSize: 50
-                    }
+                    // 1. The Source Item
+                    child: Rectangle {
+                        width: notifItem.width
+                        height: notifItem.height
+                        color: "#cc000000"
 
-                    Text {
-                        font.family: "Hack Nerd Font Mono"
-                        color: "#f4f4f4"
-                        font.pointSize: 12
-                        textFormat: Text.StyledText
-                        anchors.centerIn: parent
-                        width: 350
-                        wrapMode: Text.Wrap
-                        text: "<b>" + notifItem.modelData.summary + "</b><br>" + notifItem.modelData.body
+                        IconImage {
+                            id: notifIcon
+
+                            source: notifItem.modelData.image != "" ? notifItem.modelData.image : "image://icon//home/retro/.config/quickshell/wired.gif"
+                            implicitSize: 50
+                            backer.anchors.leftMargin: 15
+                            backer.anchors.topMargin: 15
+                        }
+
+                        Text {
+                            font.family: "Hack Nerd Font Mono"
+                            color: "#f4f4f4"
+                            font.pointSize: 11
+                            textFormat: Text.StyledText
+                            anchors.top: notifIcon.top
+                            anchors.topMargin: 13
+                            anchors.left: notifIcon.right
+                            anchors.leftMargin: 15
+                            width: 350
+                            wrapMode: Text.Wrap
+                            text: "<b>" + notifItem.modelData.summary + "</b><br>" + notifItem.modelData.body
+                        }
+
                     }
 
                 }
 
+                Timer {
+                    interval: 2000
+                    running: true
+                    onTriggered: () => {
+                        wrapRect.visible = false;
+                        shadEff.visible = true;
+                    }
+                }
+
                 // 3. The Shader
                 ShaderEffect {
+                    id: shadEff
+
                     // Uniforms
                     // Point to the SOURCE, not the Box
                     property variant noiseTex
@@ -95,11 +101,12 @@ PanelWindow {
                     property real time: 0
                     property variant source
 
+                    visible: false
                     anchors.fill: parent // Fills the delegate Item (400x35)
                     fragmentShader: "fizzle.frag.qsb"
 
                     source: ShaderEffectSource {
-                        sourceItem: sourceBox
+                        sourceItem: wrapRect
                         //live: true // Keep true if the text/source changes
                         hideSource: true
                     }
@@ -150,6 +157,9 @@ PanelWindow {
 
         }
 
+    }
+
+    mask: Region {
     }
 
 }
