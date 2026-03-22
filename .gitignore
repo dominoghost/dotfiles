@@ -3,5 +3,6 @@ archlinux-install_pacstrap.log
 copy_dotfiles.sh
 
 *.png
+*.gif
 *.qsb
 .qmlls.ini
