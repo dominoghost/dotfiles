@@ -22,6 +22,7 @@ return {
 			http = { lsp_format = "prefer" },
 			json = { "jq" },
 			qml = { "qmlformat" },
+			javascript = { "prettier" },
 		},
 		format_on_save = {
 			-- These options will be passed to conform.format()
