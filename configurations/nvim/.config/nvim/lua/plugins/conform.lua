@@ -20,7 +20,7 @@ return {
 				"stylua",
 			},
 			http = { lsp_format = "prefer" },
-			json = { "jq" },
+			json = { "prettier" },
 			qml = { "qmlformat" },
 			javascript = { "prettier" },
 		},
