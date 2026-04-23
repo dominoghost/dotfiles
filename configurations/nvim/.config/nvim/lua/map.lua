@@ -19,6 +19,7 @@ vim.keymap.set("n", "<leader>fF", ":Telescope workspaces<CR>", { desc = "Telesco
 
 -- dap binds
 local dap = require("dap")
+local dapView = require("dap-view")
 vim.keymap.set("n", "<Leader>b", function()
 	dap.toggle_breakpoint()
 end)
@@ -34,3 +35,8 @@ end)
 vim.keymap.set("n", "<F12>", function()
 	dap.step_out()
 end)
+vim.keymap.set("n", "<Leader>dr", dap.restart)
+vim.keymap.set("n", "<Leader>dt", function()
+	dap.terminate({ all = true })
+end)
+vim.keymap.set("n", "<Leader>dv", dapView.toggle)
