@@ -7,10 +7,5 @@ return {
 	},
 	opts = {
 		filters = { custom = { "^.git$" }, exclude = { ".env" } },
-		filesystem_watchers = {
-			ignore_dirs = {
-				"node_modules",
-			},
-		},
 	},
 }

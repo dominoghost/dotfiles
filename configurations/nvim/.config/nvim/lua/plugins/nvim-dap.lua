@@ -19,5 +19,9 @@ return {
 				args = { "/home/retro/Downloads/js-debug/src/dapDebugServer.js", "${port}" },
 			},
 		}
+		dap.adapters.codelldb = {
+			type = "executable",
+			command = "/home/retro/Downloads/codelldb/extension/adapter/codelldb",
+		}
 	end,
 }

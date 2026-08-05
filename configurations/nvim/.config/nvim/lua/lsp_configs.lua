@@ -96,3 +96,4 @@ vim.lsp.enable("ruff") -- Python linter and formatter
 vim.lsp.enable("pyright") -- Python completion and intellisense
 vim.lsp.enable("qmlls")
 vim.lsp.enable("glsl_analyzer")
+vim.lsp.enable("rust_analyzer")

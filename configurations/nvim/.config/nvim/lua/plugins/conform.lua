@@ -23,6 +23,7 @@ return {
 			json = { "prettier" },
 			qml = { "qmlformat" },
 			javascript = { "prettier" },
+			rust = { "rustfmt" },
 		},
 		format_on_save = {
 			-- These options will be passed to conform.format()
