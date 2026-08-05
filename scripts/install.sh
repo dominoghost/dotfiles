@@ -89,9 +89,9 @@ declare -a optional_packages
 packages+=("ufw") # ufw
 services+=("ufw.service") # ufw
 
-packages+=("apparmor") # apparmor
-optional_packages+=("python-notify2" "python-psutil" "python-gobject" "sqlite" "tk") # apparmor
-services+=("apparmor.service" "auditd.service") # apparmor
+# packages+=("apparmor") # apparmor
+# optional_packages+=("python-notify2" "python-psutil" "python-gobject" "sqlite" "tk") # apparmor
+# services+=("apparmor.service" "auditd.service") # apparmor
 
 packages+=("xorg" "xorg-xinit" "vulkan-icd-loader" "lib32-vulkan-icd-loader" "bspwm" "sxhkd" "rofi" "polybar" "kitty" "feh" "dunst" "flameshot") # xorg
 services+=("systemd-networkd.service" "systemd-resolved.service") # ethernet
@@ -461,7 +461,7 @@ partitioning
 system_install
 
 setup_configurations
-setup_apparmor
+# setup_apparmor
 setup_firewall
 setup_ethernet
 efi_setup
