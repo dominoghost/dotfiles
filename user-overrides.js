@@ -14,4 +14,6 @@ user_pref("extensions.formautofill.creditCards.enabled", false);
 user_pref("signon.rememberSignons", false);
 
 // 5 turns off DoH. Only keep it off if using a VPN with SOCKS (for my usecase). Switch to 3 if not using VPN
-user_pref("network.trr.mode", 5);
+user_pref("network.trr.mode", 3);
+
+user_pref("browser.startup.page", 3);
