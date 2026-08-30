@@ -17,3 +17,9 @@ user_pref("signon.rememberSignons", false);
 user_pref("network.trr.mode", 3);
 
 user_pref("browser.startup.page", 3);
+
+// Disable visited link coloring
+user_pref("layout.css.visited_links_enabled", false);
+
+// Disable SSO with Google/Facebook/Twitter
+user_pref("privacy.antitracking.enableWebcompat", false);
