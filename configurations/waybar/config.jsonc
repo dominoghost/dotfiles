@@ -1,0 +1,224 @@
+{
+  "exclusive": true,
+  "reload_style_on_change": true,
+  "position": "top",
+  "spacing": 0,
+  "height": 0,
+  "margin-top": 0,
+  "margin-bottom": 0,
+  "modules-left": [
+    "hyprland/workspaces"
+  ],
+  "modules-center": [
+    "clock"
+  ],
+  "modules-right": [
+    "mpd",
+    "idle_inhibitor",
+    "custom/separator",
+    "bluetooth",
+    "wireplumber",
+    "network",
+    "memory",
+    "cpu",
+    "custom/nvidia",
+    "custom/separator",
+    "tray"
+  ],
+  "custom/nvidia": {
+    "exec": "nvidia-smi --query-gpu=memory.used,temperature.gpu --format=csv,nounits,noheader | sed 's/\\([0-9]\\+\\), \\([0-9]\\+\\)/\\1MiB -  \\2°C/g'",
+    "format": " {}",
+    "interval": 3
+  },
+  "hyprland/workspaces": {
+    "cursor": true,
+    "format": "{icon}",
+    "show-special": true,
+  "format-icons": {
+    "1": "一",
+    "2": "二",
+    "3": "三",
+    "4": "四",
+    "5": "五",
+    "6": "六",
+    "7": "七",
+    "8": "八",
+    "9": "九",
+    "10": "十",
+    "magic": "外"
+  },
+},
+"custom/separator": {
+    "format": "|",
+    "tooltip": false
+},
+  "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+    "tooltip": true,
+    "format-icons": {
+      "performance": "",
+      "balanced": "",
+      "power-saver": ""
+    }
+  },
+  "cpu": {
+    "interval": 10,
+    "format": " {usage:02}%"
+  },
+  "backlight": {
+        "device": "intel_backlight",
+        "rotate": 0,
+        "format": "{icon}",
+        "tooltip-format": "{percent}%",
+        "format-icons": ["󰃞", "󰃝", "󰃟", "󰃠"],
+        "scroll-step": 1,
+        "min-length": 2
+    },
+  "memory": {
+    "interval": 2,
+    "format": " {used:0.1f}G",
+    "tooltip-format":"{used}GiB used of {total}GiB",
+  },
+  "clock": {
+    "format": "{0:%I:%M %p} <span color='#4b4e55'>| <i>{0:%d %A}</i></span>",
+    "format-alt": "{:L%d %B W%V %Y}",
+    "tooltip-format": "<span>{calendar}</span>",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      "on-click-right": "mode",
+      "format": {
+        "month": "<span color='#ffead3'><b>{}</b></span>",
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span color='#ff6699'><b>{}</b></span>"
+      }
+    }
+  },
+  "network": {
+    "format-icons": [
+      "󰤯",
+      "󰤟",
+      "󰤢",
+      "󰤥",
+      "󰤨"
+    ],
+    "format": "{icon} {essid}",
+    "format-wifi": "{icon} {essid}",
+    "format-ethernet": "󰈀",
+    "format-disconnected": "󰤮",
+    "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 3,
+    "spacing": 1
+  },
+  "battery": {
+    "format": "{icon} {capacity}%",
+    "format-discharging": "{icon} {capacity}%",
+    "format-charging": "{icon} {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-icons": {
+      "charging": [
+        "󰢜",
+        "󰂆",
+        "󰂇",
+        "󰂈",
+        "󰢝",
+        "󰂉",
+        "󰢞",
+        "󰂊",
+        "󰂋",
+        "󰂅"
+      ],
+      "default": [
+        "󰁺",
+        "󰁻",
+        "󰁼",
+        "󰁽",
+        "󰁾",
+        "󰁿",
+        "󰂀",
+        "󰂁",
+        "󰂂",
+        "󰁹"
+      ]
+    },
+    "format-full": "󰂅 {capacity}%",
+    "tooltip-format-discharging": "{timeTo}",
+    "tooltip-format-charging": "{timeTo}",
+    "interval": 5,
+    "states": {
+      "warning": 20,
+      "critical": 10
+    }
+  },
+  "bluetooth": {
+    "format": "",
+    "format-disabled": "󰂲",
+    "format-connected": "󰂱",
+    "tooltip-format": "Devices connected: {num_connections}",
+  },
+  "wireplumber": {
+    "format": "{icon} {volume}%",
+    "on-click": "pavucontrol",
+    "on-click-right": "pavucontrol",
+    "tooltip-format": "Playing at {volume}%",
+    "format-muted": "",
+    "format-icons": {
+      "default": ["", "", ""]
+    }
+  },
+"mpd": {
+	"format": "{stateIcon} {artist} - {title} [{elapsedTime:%M:%S}/{totalTime:%M:%S}] {volume}% ",
+	"format-disconnected": "Disconnected ",
+	"format-stopped": "",
+	"unknown-tag": "N/A",
+	"interval": 5,
+	"consume-icons": {
+		"on": " "
+	},
+	"random-icons": {
+		"off": "<span color=\"#f53c3c\"></span> ",
+		"on": " "
+	},
+	"repeat-icons": {
+		"on": " "
+	},
+	"single-icons": {
+		"on": "1 "
+	},
+	"state-icons": {
+		"paused": "",
+		"playing": ""
+	},
+	"tooltip-format": "MPD (connected)",
+	"tooltip-format-disconnected": "MPD (disconnected)",
+	"server": "/tmp/mpd_socket",
+	"on-click": "rmpc togglepause",
+	"on-scroll-up": "rmpc volume +5",
+	"on-scroll-down": "rmpc volume -5"
+    // "format": " {dynamic}",
+    // "format-paused": "{status_icon} {dynamic}",
+    // "interval": 5,
+    // "dynamic-order": ["artist", "position", "length"],
+    // "dynamic-importance-order": ["position", "length", "artist"],
+    // "tooltip-format": "{player} ({status}):\n{artist} - {title}",
+    // "status-icons": {
+    //   "paused": "󰝛"
+    // },
+    },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "tooltip-format-activated": "Stay Awake: ON",
+    "tooltip-format-deactivated": "Stay Awake: OFF",
+    "format-icons": {
+      "activated": "󰛨",
+      "deactivated": "󰛩"
+    }
+  },
+  "tray": {
+    "icon-size": 14,
+    "spacing": 4
+  },
+  }
